@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceramientas — Control inteligente para tu horno cerámico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terra:    #C0503A;
+    --terra-d:  #8a3528;
+    --terra-l:  #f2ddd8;
+    --ink:      #1a1410;
+    --ash:      #4a3f38;
+    --dust:     #9c8c84;
+    --paper:    #faf6f2;
+    --warm-w:   #fff9f5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(2rem, 5vw, 4rem);
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, var(--terra-l) 0%, transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--terra);
+    text-transform: uppercase;
+  }
+
+  .nav-sub {
+    font-size: 0.65rem;
+    color: var(--dust);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+    padding: 4rem 0 2rem;
+  }
+
+  .eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    border-left: 2px solid var(--terra);
+    padding-left: 0.75rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 9vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--ink);
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--terra);
+  }
+
+  .hero-sub {
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    color: var(--ash);
+    line-height: 1.7;
+    max-width: 38ch;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--terra);
+    color: #fff;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .btn-primary:hover {
+    background: var(--terra-d);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(192,80,58,0.3);
+  }
+
+  .btn-secondary {
+    border: 1px solid var(--dust);
+    color: var(--ash);
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .btn-secondary:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+    transform: translateY(-2px);
+  }
+
+  .btn-icon { font-size: 1rem; }
+
+  .hero-scroll {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dust);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--dust);
+    animation: lineGrow 1s 0.8s ease both;
+    transform-origin: left;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--dust) 30%, var(--terra) 50%, var(--dust) 70%, transparent);
+    opacity: 0.3;
+    margin: 0 clamp(2rem, 5vw, 4rem);
+  }
+
+  /* ── DOWNLOADS ── */
+  .downloads {
+    padding: clamp(4rem, 8vw, 7rem) clamp(2rem, 5vw, 4rem);
+    position: relative;
+  }
+
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--terra-l);
+    max-width: 120px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 1.5rem;
+    max-width: 800px;
+  }
+
+  .card {
+    background: var(--warm-w);
+    border: 1px solid rgba(192,80,58,0.12);
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--terra);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    border-color: rgba(192,80,58,0.3);
+    box-shadow: 0 12px 40px rgba(192,80,58,0.08);
+    transform: translateY(-4px);
+  }
+  .card:hover::before { transform: scaleY(1); }
+
+  .card-num {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--terra);
+    opacity: 0.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .card-desc {
+    font-size: 0.7rem;
+    color: var(--dust);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .card-action {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terra);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s ease;
+  }
+  .card:hover .card-action { gap: 0.8rem; }
+  .card-action::after { content: '→'; }
+
+  .card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--terra-l);
+    color: var(--terra);
+    padding: 0.2rem 0.6rem;
+    clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+  }
+
+  /* ── FEATURES STRIP ── */
+  .features {
+    padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .features::before {
+    content: 'CERAMIENTAS';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(6rem, 15vw, 12rem);
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.05em;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .feat {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.25rem;
+  }
+
+  .feat-num {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--terra);
+    margin-bottom: 0.75rem;
+  }
+
+  .feat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .feat-desc {
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 3rem clamp(2rem, 5vw, 4rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 1px solid var(--terra-l);
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--terra);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dust);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--terra); }
+
+  .footer-copy {
+    font-size: 0.6rem;
+    color: var(--dust);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes lineGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero-cta { flex-direction: column; }
+    .btn { justify-content: center; }
+    .footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <nav class="nav">
+    <span class="nav-brand">Ceramientas</span>
+    <span class="nav-sub">Hecho en Argentina</span>
+  </nav>
+
+  <div class="hero-center">
+    <span class="eyebrow">Controlador de horno cerámico</span>
+    <h1 class="hero-title">
+      El horno<br>
+      no para.<br>
+      <em>Vos tampoco</em><br>
+      tenés que<br>
+      hacerlo.
+    </h1>
+    <p class="hero-sub">
+      Control inteligente para tu horno cerámico desde el celular.
+      WiFi · App Android · 24 programas · Seguridad Extra.
+    </p>
+    <div class="hero-cta">
+      <a href="https://drive.google.com/file/d/1HElQ206uilOv0DKq-L9kR4xowPz431ZE/view?usp=sharing"
+         class="btn btn-primary" target="_blank" rel="noopener">
+        <span class="btn-icon">📱</span> Descargar App
+      </a>
+      <a href="https://drive.google.com/file/d/1cGCF5k0LUbn5qZUad4Wiloo6bAOvypCT/view?usp=sharing"
+         class="btn btn-secondary" target="_blank" rel="noopener">
+        <span class="btn-icon">📄</span> Manual PDF
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Descargas</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── DOWNLOADS ── -->
+<section class="downloads">
+  <p class="section-label">Recursos disponibles</p>
+  <div class="cards">
+
+    <a href="https://drive.google.com/file/d/1HElQ206uilOv0DKq-L9kR4xowPz431ZE/view?usp=sharing"
+       class="card" target="_blank" rel="noopener">
+      <span class="card-badge">Android 8+</span>
+      <span class="card-num">01 / 02</span>
+      <span class="card-icon">📱</span>
+      <h2 class="card-title">App Android</h2>
+      <p class="card-desc">
+        Instalador .apk · Gratuito · Sin Play Store.<br>
+        Control remoto, historial, programas y alarmas.
+      </p>
+      <span class="card-action">Descargar app</span>
+    </a>
+
+    <a href="https://drive.google.com/file/d/1cGCF5k0LUbn5qZUad4Wiloo6bAOvypCT/view?usp=sharing"
+       class="card" target="_blank" rel="noopener">
+      <span class="card-badge">PDF</span>
+      <span class="card-num">02 / 02</span>
+      <span class="card-icon">📄</span>
+      <h2 class="card-title">Manual de Usuario</h2>
+      <p class="card-desc">
+        Manual completo en PDF.<br>
+        Diagramas de conexión, programas, alarmas y garantía.
+      </p>
+      <span class="card-action">Leer manual</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features">
+  <div class="features-grid">
+    <div class="feat">
+      <p class="feat-num">01</p>
+      <h3 class="feat-title">24 programas</h3>
+      <p class="feat-desc">6 etapas c/u. 4 precargados: Bizcocho, Esmalte, 3ra Cocción, Gres.</p>
+    </div>
+    <div class="feat">
+      <p class="feat-num">02</p>
+      <h3 class="feat-title">Contactor o SSR</h3>
+      <p class="feat-desc">Un solo equipo. Seleccionás el modo desde la app. Reemplazo directo.</p>
+    </div>
+    <div class="feat">
+      <p class="feat-num">03</p>
+      <h3 class="feat-title">Seguridad Extra</h3>
+      <p class="feat-desc">Corte físico de resistencias ante alarma crítica, sin depender del software.</p>
+    </div>
+    <div class="feat">
+      <p class="feat-num">04</p>
+      <h3 class="feat-title">Corte de luz</h3>
+      <p class="feat-desc">Detecta el corte y restablece la horneada al volver. Notificación en el celular.</p>
+    </div>
+    <div class="feat">
+      <p class="feat-num">05</p>
+      <h3 class="feat-title">Historial</h3>
+      <p class="feat-desc">Últimas 30 cocciones guardadas en memoria. Sin internet.</p>
+    </div>
+    <div class="feat">
+      <p class="feat-num">06</p>
+      <h3 class="feat-title">WiFi 2.4 GHz</h3>
+      <p class="feat-desc">Pantalla OLED siempre activa como respaldo, con o sin celular.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <span class="footer-brand">Ceramientas</span>
+  <ul class="footer-links">
+    <li><a href="https://instagram.com/ceramientas" target="_blank" rel="noopener">@ceramientas</a></li>
+    <li><a href="https://wa.me/5492664857103" target="_blank" rel="noopener">WhatsApp</a></li>
+  </ul>
+  <span class="footer-copy">Témperley, Buenos Aires · Ley N° 24.240</span>
+</footer>
+
+</body>
+</html>
