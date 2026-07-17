@@ -321,6 +321,84 @@
     clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
   }
 
+  /* ── INSTALL ── */
+  .install {
+    padding: clamp(4rem, 8vw, 7rem) clamp(2rem, 5vw, 4rem);
+  }
+  .install-intro {
+    font-size: 0.75rem;
+    color: var(--ash);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 3rem;
+  }
+  .install-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 2.5rem;
+    max-width: 800px;
+  }
+  .install-col {
+    border-top: 1px solid var(--terra-l);
+    padding-top: 1.5rem;
+  }
+  .install-os {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .install-os-icon { font-size: 1.1rem; }
+  .install-steps {
+    list-style: none;
+    counter-reset: step;
+    margin-bottom: 1.25rem;
+  }
+  .install-steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2rem;
+    font-size: 0.72rem;
+    color: var(--ash);
+    line-height: 1.6;
+    margin-bottom: 0.9rem;
+  }
+  .install-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: -0.05rem;
+    font-size: 0.6rem;
+    color: var(--terra);
+    border: 1px solid var(--terra);
+    width: 1.1rem;
+    height: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .install-steps strong { color: var(--ink); font-weight: 600; }
+  .install-note {
+    font-size: 0.65rem;
+    color: var(--dust);
+    line-height: 1.5;
+  }
+  .cards-footnote {
+    margin-top: 2rem;
+    font-size: 0.68rem;
+    color: var(--dust);
+  }
+  .cards-footnote a {
+    color: var(--terra);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   /* ── FEATURES STRIP ── */
   .features {
     padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
@@ -461,12 +539,12 @@
     </h1>
     <p class="hero-sub">
       Control inteligente para tu horno cerámico desde el celular.
-      WiFi · App Android · 24 programas · Seguridad Extra.
+      WiFi · App multiplataforma · 24 programas · Seguridad Extra.
     </p>
     <div class="hero-cta">
-      <a href="https://github.com/jorgecflores-oss/ceramientas/releases/latest/download/app-release.apk"
+      <a href="https://jorgecflores-oss.github.io/ceramientas-web/"
          class="btn btn-primary" target="_blank" rel="noopener">
-        <span class="btn-icon">📱</span> Descargar App
+        <span class="btn-icon">📱</span> Abrir la App
       </a>
       <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf"
          class="btn btn-secondary" target="_blank" rel="noopener">
@@ -487,10 +565,23 @@
   <p class="section-label">Recursos disponibles</p>
   <div class="cards">
 
+    <a href="https://jorgecflores-oss.github.io/ceramientas-web/"
+       class="card" target="_blank" rel="noopener">
+      <span class="card-badge">Android · iOS · PC</span>
+      <span class="card-num">01 / 03</span>
+      <span class="card-icon">🌐</span>
+      <h2 class="card-title">App Multiplataforma</h2>
+      <p class="card-desc">
+        Funciona en cualquier celular o PC, sin tienda de apps.<br>
+        Se instala directo desde el navegador. Actualización automática.
+      </p>
+      <span class="card-action">Abrir la app</span>
+    </a>
+
     <a href="https://github.com/jorgecflores-oss/ceramientas/releases/latest/download/app-release.apk"
        class="card" target="_blank" rel="noopener">
       <span class="card-badge">Android 8+</span>
-      <span class="card-num">01 / 02</span>
+      <span class="card-num">02 / 03</span>
       <span class="card-icon">📱</span>
       <h2 class="card-title">App Android</h2>
       <p class="card-desc">
@@ -503,7 +594,7 @@
     <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf"
        class="card" target="_blank" rel="noopener">
       <span class="card-badge">PDF</span>
-      <span class="card-num">02 / 02</span>
+      <span class="card-num">03 / 03</span>
       <span class="card-icon">📄</span>
       <h2 class="card-title">Manual de Usuario</h2>
       <p class="card-desc">
@@ -514,7 +605,58 @@
     </a>
 
   </div>
+  <p class="cards-footnote">
+    ¿Primera vez instalando la app? <a href="#como-instalar">Mirá cómo hacerlo →</a>
+  </p>
 </section>
+
+  <div class="divider"></div>
+
+  <!-- ── CÓMO INSTALAR ── -->
+  <section class="install" id="como-instalar">
+    <p class="section-label">Cómo instalar</p>
+    <p class="install-intro">
+      La app funciona en el navegador. No hay tienda de apps, no ocupa espacio de más,
+      se actualiza sola. Se instala una vez y queda como ícono en tu pantalla de inicio.
+    </p>
+
+    <div class="install-grid">
+
+      <div class="install-col">
+        <h3 class="install-os">
+          <span class="install-os-icon">🤖</span> Android
+        </h3>
+        <ol class="install-steps">
+          <li>Abrí <strong>ceramientas-web</strong> con Chrome.</li>
+          <li>Tocá el menú <strong>⋮</strong> arriba a la derecha.</li>
+          <li>Elegí <strong>"Instalar app"</strong> o <strong>"Añadir a pantalla de inicio"</strong>.</li>
+          <li>Confirmá tocando <strong>"Instalar"</strong>.</li>
+        </ol>
+        <p class="install-note">Chrome suele mostrar un cartel automático para instalar. Podés usar ese directamente.</p>
+      </div>
+
+      <div class="install-col">
+        <h3 class="install-os">
+          <span class="install-os-icon">🍎</span> iPhone / iPad
+        </h3>
+        <ol class="install-steps">
+          <li>Abrí <strong>ceramientas-web</strong> con <strong>Safari</strong> (no funciona desde Chrome en iOS).</li>
+          <li>Tocá el ícono <strong>Compartir</strong> (cuadrado con flecha hacia arriba).</li>
+          <li>Elegí <strong>"Añadir a pantalla de inicio"</strong>.</li>
+          <li>Confirmá tocando <strong>"Añadir"</strong>.</li>
+        </ol>
+        <p class="install-note">Tiene que ser Safari. Es requisito de Apple, no de Ceramientas.</p>
+      </div>
+
+    </div>
+
+    <a href="https://jorgecflores-oss.github.io/ceramientas-web/"
+       class="btn btn-primary" target="_blank" rel="noopener" style="margin-top:2.5rem;">
+      <span class="btn-icon">🌐</span> Abrir la app ahora
+    </a>
+  </section>
+
+  <div class="divider"></div>
 
 <!-- ── FEATURES ── -->
 <section class="features">
