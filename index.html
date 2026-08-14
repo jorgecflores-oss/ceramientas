@@ -447,6 +447,121 @@
   .screen-card img { width: 100%; border-radius: 12px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
   .screen-label { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--dust); text-align: center; }
   .screens-legal { font-size: 0.6rem; color: var(--dust); line-height: 1.6; max-width: 70ch; font-style: italic; border-top: 1px solid var(--terra-l); padding-top: 1rem; }
+
+  /* ── GUIA DE CONFIGURACION ── */
+  .guia-section {
+    padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 4rem);
+    background: var(--warm-w);
+  }
+  .guia-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .guia-sub {
+    font-size: 0.75rem;
+    color: var(--dust);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 60ch;
+  }
+  .guia-sub em { color: var(--ash); }
+  .guia-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 2px solid var(--terra-l);
+    margin-left: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  .guia-step {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.25rem 0 1.25rem 1.5rem;
+    position: relative;
+  }
+  .guia-step:not(:last-child) {
+    border-bottom: 1px solid var(--terra-l);
+  }
+  .guia-step-num {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--terra);
+    background: var(--warm-w);
+    border: 1px solid var(--terra);
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: absolute;
+    left: -1.2rem;
+    top: 1.2rem;
+  }
+  .guia-step-body {
+    padding-left: 1.5rem;
+  }
+  .guia-step-body h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .guia-step-body p {
+    font-size: 0.75rem;
+    color: var(--ash);
+    line-height: 1.7;
+  }
+  .guia-step-body ul {
+    margin: 0.5rem 0 0 1rem;
+    font-size: 0.75rem;
+    color: var(--ash);
+    line-height: 1.7;
+  }
+  .guia-step-body strong { color: var(--ink); }
+  .guia-step-body em { color: var(--dust); }
+  .guia-step-body code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    background: var(--terra-l);
+    color: var(--terra-d);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+  }
+  .guia-step-body a {
+    color: var(--terra);
+    text-decoration: none;
+  }
+  .guia-step-body a:hover { text-decoration: underline; }
+  .guia-troubleshoot {
+    background: var(--paper);
+    border: 1px solid var(--terra-l);
+    padding: 1.5rem;
+    border-radius: 2px;
+  }
+  .guia-troubleshoot h3 {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 1rem;
+  }
+  .guia-tip {
+    font-size: 0.72rem;
+    color: var(--ash);
+    line-height: 1.7;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--terra-l);
+  }
+  .guia-tip:first-of-type { border-top: none; }
+  .guia-tip strong { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -478,7 +593,7 @@
          class="btn btn-primary" target="_blank" rel="noopener">
         <span class="btn-icon">📱</span> Abrir App
       </a>
-      <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf"
+      <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf" download="manual_ceramientas.pdf"
          class="btn btn-secondary" target="_blank" rel="noopener">
         <span class="btn-icon">📄</span> Manual PDF
       </a>
@@ -500,7 +615,7 @@
     <a href="https://jorgecflores-oss.github.io/ceramientas-web"
        class="card" target="_blank" rel="noopener">
       <span class="card-badge">iOS · Android · Web</span>
-      <span class="card-num">01 / 02</span>
+      <span class="card-num">01 / 03</span>
       <span class="card-icon">📱</span>
       <h2 class="card-title">App Ceramientas</h2>
       <p class="card-desc">
@@ -510,10 +625,10 @@
       <span class="card-action">Abrir app</span>
     </a>
 
-    <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf"
+    <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf" download="manual_ceramientas.pdf"
        class="card" target="_blank" rel="noopener">
       <span class="card-badge">PDF</span>
-      <span class="card-num">02 / 02</span>
+      <span class="card-num">02 / 03</span>
       <span class="card-icon">📄</span>
       <h2 class="card-title">Manual de Usuario</h2>
       <p class="card-desc">
@@ -521,6 +636,19 @@
         Diagramas de conexión, programas, alarmas y garantía.
       </p>
       <span class="card-action">Leer manual</span>
+    </a>
+
+    <a href="#guia-config"
+       class="card">
+      <span class="card-badge">Paso a paso</span>
+      <span class="card-num">03 / 03</span>
+      <span class="card-icon">🔧</span>
+      <h2 class="card-title">Guía de configuración</h2>
+      <p class="card-desc">
+        Vinculá tu horno por primera vez.<br>
+        10 minutos, sin experiencia técnica requerida.
+      </p>
+      <span class="card-action">Ver guía</span>
     </a>
 
   </div>
@@ -531,8 +659,8 @@
   <div class="features-grid">
     <div class="feat">
       <p class="feat-num">01</p>
-      <h3 class="feat-title">24 programas</h3>
-      <p class="feat-desc">6 etapas c/u. 4 precargados: Bizcocho, Esmalte, 3ra Cocción, Gres.</p>
+      <h3 class="feat-title">40 programas</h3>
+      <p class="feat-desc">6 etapas c/u. 4 precargados orientativos, editables y restaurables.</p>
     </div>
     <div class="feat">
       <p class="feat-num">02</p>
