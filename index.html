@@ -562,6 +562,30 @@
   }
   .guia-tip:first-of-type { border-top: none; }
   .guia-tip strong { color: var(--ink); }
+
+  /* ── GUIA DE CONFIGURACION ── */
+  .guia-section { padding: clamp(3rem,6vw,5rem) clamp(2rem,5vw,4rem); background: var(--warm-w); }
+  .guia-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,4vw,3rem); font-weight: 300; color: var(--ink); margin-bottom: 0.5rem; }
+  .guia-sub { font-size: 0.75rem; color: var(--dust); line-height: 1.7; margin-bottom: 2.5rem; max-width: 60ch; }
+  .guia-sub em { color: var(--ash); }
+  .guia-steps { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--terra-l); margin-left: 1.2rem; margin-bottom: 2.5rem; }
+  .guia-step { display: flex; gap: 1.5rem; padding: 1.25rem 0 1.25rem 1.5rem; position: relative; }
+  .guia-step:not(:last-child) { border-bottom: 1px solid var(--terra-l); }
+  .guia-step-num { font-size: 0.6rem; letter-spacing: 0.15em; color: var(--terra); background: var(--warm-w); border: 1px solid var(--terra); width: 2.2rem; height: 2.2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: absolute; left: -1.2rem; top: 1.2rem; }
+  .guia-step-body { padding-left: 1.5rem; }
+  .guia-step-body h3 { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.4rem; }
+  .guia-step-body p, .guia-step-body ul { font-size: 0.75rem; color: var(--ash); line-height: 1.7; }
+  .guia-step-body ul { margin: 0.5rem 0 0 1rem; }
+  .guia-step-body strong { color: var(--ink); }
+  .guia-step-body code { font-family: 'DM Mono', monospace; font-size: 0.7rem; background: var(--terra-l); color: var(--terra-d); padding: 0.1em 0.4em; border-radius: 3px; }
+  .guia-step-body a { color: var(--terra); text-decoration: none; }
+  .guia-step-body a:hover { text-decoration: underline; }
+  .guia-troubleshoot { background: var(--paper); border: 1px solid var(--terra-l); padding: 1.5rem; border-radius: 2px; }
+  .guia-troubleshoot h3 { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terra); margin-bottom: 1rem; }
+  .guia-tip { font-size: 0.72rem; color: var(--ash); line-height: 1.7; padding: 0.6rem 0; border-top: 1px solid var(--terra-l); }
+  .guia-tip:first-of-type { border-top: none; }
+  .guia-tip strong { color: var(--ink); }
+
 </style>
 </head>
 <body>
@@ -625,7 +649,7 @@
       <span class="card-action">Abrir app</span>
     </a>
 
-    <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf" download="manual_ceramientas.pdf"
+    <a href="https://jorgecflores-oss.github.io/ceramientas/manual_ceramientas.pdf"
        class="card" target="_blank" rel="noopener">
       <span class="card-badge">PDF</span>
       <span class="card-num">02 / 03</span>
@@ -691,6 +715,50 @@
 </section>
 
 <!-- ── FOOTER ── -->
+
+<div class="divider"></div>
+<section class="guia-section" id="guia-config">
+  <p class="section-label">Primeros pasos</p>
+  <h2 class="guia-title">Configuración inicial del horno</h2>
+  <p class="guia-sub">Vinculá tu horno con la app por primera vez. Lleva menos de 10 minutos.<br>
+  <em>Antes de empezar: el horno tiene que estar enchufado y encendido, y necesitás el nombre y la contraseña de tu red WiFi a mano.</em></p>
+  <div class="guia-steps">
+    <div class="guia-step"><div class="guia-step-num">01</div><div class="guia-step-body">
+      <h3>Abrir la app</h3>
+      <p>Entrá desde el navegador del celular a <a href="https://jorgecflores-oss.github.io/ceramientas-web" target="_blank" rel="noopener">ceramientas-web</a>. Si querés, agregala a la pantalla de inicio desde el menú del navegador ("Agregar a pantalla de inicio" o "Instalar app") para tenerla como un ícono más.</p>
+    </div></div>
+    <div class="guia-step"><div class="guia-step-num">02</div><div class="guia-step-body">
+      <h3>Ajustes → Agregar horno</h3>
+      <p>Dentro de la app, andá a la pestaña <strong>Ajustes</strong> y buscá la opción para agregar un horno nuevo.</p>
+    </div></div>
+    <div class="guia-step"><div class="guia-step-num">03</div><div class="guia-step-body">
+      <h3>Conectarte a la red propia del horno</h3>
+      <p>El horno, apenas se enciende, larga su propia red WiFi — no hace falta que tenga internet configurado todavía.</p>
+      <ul>
+        <li>Andá a los ajustes de WiFi de tu celular y buscá una red con el formato <code>CERAMIENTAS_XXXX</code> (las últimas 4 cifras identifican a tu horno).</li>
+        <li>Conectate. La contraseña es <code>ceramientas</code>.</li>
+      </ul>
+    </div></div>
+    <div class="guia-step"><div class="guia-step-num">04</div><div class="guia-step-body">
+      <h3>Vincular el horno detectado</h3>
+      <p>Volvé a la app y tocá <strong>"Buscar horno"</strong>. Al estar conectado directo a su red, lo va a detectar casi al instante. Tocalo para vincularlo — la seguridad del equipo se configura sola en este paso.</p>
+    </div></div>
+    <div class="guia-step"><div class="guia-step-num">05</div><div class="guia-step-body">
+      <h3>Configurar el WiFi definitivo</h3>
+      <p>Con el horno vinculado, andá a <strong>Ajustes → Configurar WiFi</strong>. Vas a ver una lista de redes detectadas: elegís la tuya, escribís su contraseña y confirmás. El horno se reinicia solo y avisa <em>"WIFI GUARDADO"</em> en su pantalla. Ya podés volver a conectar tu celular a tu WiFi de siempre.</p>
+    </div></div>
+    <div class="guia-step"><div class="guia-step-num">06</div><div class="guia-step-body">
+      <h3>Usar la app</h3>
+      <p>Con el horno en tu red, lo controlás desde cualquier lado con internet. Desde <strong>Horno</strong> ves temperatura en vivo y la curva de la horneada. Desde <strong>Programas</strong>, creás o elegís qué correr. Desde <strong>Historial</strong>, revisás horneadas anteriores.</p>
+    </div></div>
+  </div>
+  <div class="guia-troubleshoot">
+    <h3>Si algo no funciona</h3>
+    <div class="guia-tip"><strong>No aparece la red CERAMIENTAS_XXXX:</strong> confirmá que el horno esté encendido. Si ya tiene WiFi configurado de antes, no vuelve a largar esta red — andá directo a Ajustes → Configurar WiFi desde tu red normal.</div>
+    <div class="guia-tip"><strong>"Buscar horno" no lo encuentra:</strong> confirmá que tu celular esté conectado a la red del horno en ese momento, no a tu WiFi normal ni a datos móviles.</div>
+    <div class="guia-tip"><strong>Se cortó la luz o el WiFi durante una horneada:</strong> no hay problema — el horno sigue el programa solo, sin depender de la app ni de internet. En cuanto vuelva la conexión, la app se pone al día sola.</div>
+  </div>
+</section>
 
 <div class="divider"></div>
 <section class="screens-section">
