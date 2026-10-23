@@ -719,43 +719,37 @@
 <div class="divider"></div>
 <section class="guia-section" id="guia-config">
   <p class="section-label">Primeros pasos</p>
-  <h2 class="guia-title">Configuración inicial del horno</h2>
-  <p class="guia-sub">Vinculá tu horno con la app por primera vez. Lleva menos de 10 minutos.<br>
+  <h2 class="guia-title">Cómo vincular el horno</h2>
+  <p class="guia-sub">Igual en Android, iPhone y PC. Lleva menos de 10 minutos.<br>
   <em>Antes de empezar: el horno tiene que estar enchufado y encendido, y necesitás el nombre y la contraseña de tu red WiFi a mano.</em></p>
   <div class="guia-steps">
     <div class="guia-step"><div class="guia-step-num">01</div><div class="guia-step-body">
-      <h3>Abrir la app</h3>
-      <p>Entrá desde el navegador del celular a <a href="https://jorgecflores-oss.github.io/ceramientas-web" target="_blank" rel="noopener">ceramientas-web</a>. Si querés, agregala a la pantalla de inicio desde el menú del navegador ("Agregar a pantalla de inicio" o "Instalar app") para tenerla como un ícono más.</p>
-    </div></div>
-    <div class="guia-step"><div class="guia-step-num">02</div><div class="guia-step-body">
-      <h3>Ajustes → Agregar horno</h3>
-      <p>Dentro de la app, andá a la pestaña <strong>Ajustes</strong> y buscá la opción para agregar un horno nuevo.</p>
-    </div></div>
-    <div class="guia-step"><div class="guia-step-num">03</div><div class="guia-step-body">
-      <h3>Conectarte a la red propia del horno</h3>
-      <p>El horno, apenas se enciende, larga su propia red WiFi — no hace falta que tenga internet configurado todavía.</p>
+      <h3>Conectar el horno a tu WiFi <em>(solo la primera vez)</em></h3>
       <ul>
-        <li>Andá a los ajustes de WiFi de tu celular y buscá una red con el formato <code>CERAMIENTAS_XXXX</code> (las últimas 4 cifras identifican a tu horno).</li>
-        <li>Conectate. La contraseña es <code>ceramientas</code>.</li>
+        <li>Encendé el horno. En el teléfono conectate a la red <code>CERAMIENTAS_XXXX</code> (clave: <code>ceramientas</code>).</li>
+        <li>Abrí el navegador y escribí <code>192.168.4.1</code>.</li>
+        <li>Escaneá redes, elegí tu WiFi de <strong>2.4 GHz</strong>, escribí la clave y guardá. El horno se reinicia y se conecta solo.</li>
+        <li>Mientras estés en esa red, la app no controla el horno. Sirve solo para darle el WiFi.</li>
       </ul>
     </div></div>
-    <div class="guia-step"><div class="guia-step-num">04</div><div class="guia-step-body">
-      <h3>Vincular el horno detectado</h3>
-      <p>Volvé a la app y tocá <strong>"Buscar horno"</strong>. Al estar conectado directo a su red, lo va a detectar casi al instante. Tocalo para vincularlo — la seguridad del equipo se configura sola en este paso.</p>
+    <div class="guia-step"><div class="guia-step-num">02</div><div class="guia-step-body">
+      <h3>Vincular con la app</h3>
+      <ul>
+        <li>Volvé a tu WiFi de siempre, o a datos móviles. El teléfono necesita internet.</li>
+        <li>Abrí la app <a href="https://jorgecflores-oss.github.io/ceramientas-web" target="_blank" rel="noopener">ceramientas-web</a> y andá a <strong>"Agregar horno"</strong>.</li>
+        <li>Escribí los 4 últimos caracteres del nombre de la red (<code>CERAMIENTAS_XXXX</code>) y tocá <strong>Vincular</strong>. Puede tardar hasta 20 segundos.</li>
+      </ul>
+      <p><em>Nota: si el horno ya está en tu WiFi, hacé solo el paso 2. Para sumar otro teléfono, también.</em></p>
     </div></div>
-    <div class="guia-step"><div class="guia-step-num">05</div><div class="guia-step-body">
-      <h3>Configurar el WiFi definitivo</h3>
-      <p>Con el horno vinculado, andá a <strong>Ajustes → Configurar WiFi</strong>. Vas a ver una lista de redes detectadas: elegís la tuya, escribís su contraseña y confirmás. El horno se reinicia solo y avisa <em>"WIFI GUARDADO"</em> en su pantalla. Ya podés volver a conectar tu celular a tu WiFi de siempre.</p>
-    </div></div>
-    <div class="guia-step"><div class="guia-step-num">06</div><div class="guia-step-body">
+    <div class="guia-step"><div class="guia-step-num">03</div><div class="guia-step-body">
       <h3>Usar la app</h3>
       <p>Con el horno en tu red, lo controlás desde cualquier lado con internet. Desde <strong>Horno</strong> ves temperatura en vivo y la curva de la horneada. Desde <strong>Programas</strong>, creás o elegís qué correr. Desde <strong>Historial</strong>, revisás horneadas anteriores.</p>
     </div></div>
   </div>
   <div class="guia-troubleshoot">
     <h3>Si algo no funciona</h3>
-    <div class="guia-tip"><strong>No aparece la red CERAMIENTAS_XXXX:</strong> confirmá que el horno esté encendido. Si ya tiene WiFi configurado de antes, no vuelve a largar esta red — andá directo a Ajustes → Configurar WiFi desde tu red normal.</div>
-    <div class="guia-tip"><strong>"Buscar horno" no lo encuentra:</strong> confirmá que tu celular esté conectado a la red del horno en ese momento, no a tu WiFi normal ni a datos móviles.</div>
+    <div class="guia-tip"><strong>No aparece la red CERAMIENTAS_XXXX:</strong> confirmá que el horno esté encendido y cerca del teléfono. Esperá un minuto después de encenderlo. Si el horno ya estaba en tu WiFi, no hace falta conectarte a esa red: hacé directamente el paso 2.</div>
+    <div class="guia-tip"><strong>"Vincular" no encuentra el horno:</strong> confirmá que el teléfono tenga internet (tu WiFi o datos móviles, no la red <code>CERAMIENTAS_XXXX</code>), que el horno haya quedado conectado a tu WiFi en el paso 1 y que los 4 caracteres estén bien escritos.</div>
     <div class="guia-tip"><strong>Se cortó la luz o el WiFi durante una horneada:</strong> no hay problema — el horno sigue el programa solo, sin depender de la app ni de internet. En cuanto vuelva la conexión, la app se pone al día sola.</div>
   </div>
 </section>
